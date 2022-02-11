@@ -114,6 +114,29 @@ function myPlugin(octokit, options) {
         <strong>Required.</strong> Repository name
       </td>
     </tr>
+    <tr>
+      <th>
+        <code>since</code>
+      </th>
+      <th>
+        <code>string</code>
+      </th>
+      <td>
+
+Filter out versions equal or lower than a provided `since` version.
+
+Example: Load all versions greater than `v1.2.3`
+
+```js
+const releases = await octokit.getSemanticReleases({
+  owner: "octokit",
+  repo: "core.js",
+  since: "1.2.3",
+});
+```
+
+</td>
+    </tr>
   </tbody>
 </table>
   
