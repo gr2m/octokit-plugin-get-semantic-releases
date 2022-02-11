@@ -2,10 +2,7 @@ import { Octokit } from "@octokit/core";
 import { composePaginateRest } from "@octokit/plugin-paginate-rest";
 import semverValid from "semver/functions/valid";
 
-type GetSemanticReleasesOptions = {
-  owner: string;
-  repo: string;
-};
+import { GetSemanticReleasesOptions } from "./types";
 
 /**
  * @param octokit Octokit instance
