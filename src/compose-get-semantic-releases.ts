@@ -2,6 +2,7 @@ import { Octokit } from "@octokit/core";
 import { composePaginateRest } from "@octokit/plugin-paginate-rest";
 import semverValid from "semver/functions/valid";
 import semverGt from "semver/functions/gt";
+import semverCompare from "semver/functions/compare";
 
 import { GetSemanticReleasesOptions } from "./types";
 
@@ -34,7 +35,11 @@ export async function composeGetSemanticReleases(
       // If `since` is specified, return only releases newer than `since`
       if (semverGt(version, options.since)) return { version, ...release };
     })
-    .filter(Boolean);
+    .filter(Boolean)
+    .sort((releaseA, releaseB) =>
+      // @ts-expect-error - releases are always defined because of the `.filter(Boolean)` above
+      semverCompare(releaseA.version, releaseB.version)
+    );
 }
 
 function tagNameToVersion(tagName: string) {
