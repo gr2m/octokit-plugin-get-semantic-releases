@@ -58,6 +58,7 @@ const releases = await octokit.getSemanticReleases({
 });
 // `releases` is array of releases as shown at https://docs.github.com/en/rest/reference/releases#list-releases
 // but includes a `version` property, which is the normalized semantic version derived from the tag name.
+// The releases are sorted by version in ascending order.
 ```
 
 If you want to utilize the `getSemanticReleases()` in another plugin or with an existing `octokit` instance, use `composeGetSemanticReleases`.
