@@ -20,7 +20,10 @@ Load `octokit-plugin-get-semantic-releases` and [`@octokit/core`](https://github
 ```html
 <script type="module">
   import { Octokit } from "https://cdn.skypack.dev/@octokit/core";
-  import { getSemanticReleases } from "https://cdn.skypack.dev/octokit-plugin-get-semantic-releases";
+  import {
+    getSemanticReleases,
+    composeGetSemanticReleases,
+  } from "https://cdn.skypack.dev/octokit-plugin-get-semantic-releases";
 </script>
 ```
 
@@ -35,7 +38,10 @@ Install with `npm install @octokit/core octokit-plugin-get-semantic-releases`. O
 
 ```js
 const { Octokit } = require("@octokit/core");
-const { getSemanticReleases } = require("octokit-plugin-get-semantic-releases");
+const {
+  getSemanticReleases,
+  composeGetSemanticReleases,
+} = require("octokit-plugin-get-semantic-releases");
 ```
 
 </td></tr>
@@ -52,6 +58,21 @@ const releases = await octokit.getSemanticReleases({
 });
 // `releases` is array of releases as shown at https://docs.github.com/en/rest/reference/releases#list-releases
 // but includes a `version` property, which is the normalized semantic version derived from the tag name.
+```
+
+If you want to utilize the `getSemanticReleases()` in another plugin or with an existing `octokit` instance, use `composeGetSemanticReleases`.
+
+```js
+function myPlugin(octokit, options) {
+  return {
+    myMethod({owner, repo}) => {
+      return composeGetSemanticReleases(
+        octokit,
+        {owner, repo }
+      )
+    }
+  }
+}
 ```
 
 ## Options
