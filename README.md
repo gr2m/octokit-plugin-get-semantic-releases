@@ -73,13 +73,24 @@ const releases = await octokit.getSemanticReleases({
   <tbody align=left valign=top>
     <tr>
       <th>
-        <code>option name</code>
+        <code>owner</code>
       </th>
       <th>
-        <code>option type</code>
+        <code>string</code>
       </th>
       <td>
-        <strong>Required.</strong> Description here
+        <strong>Required.</strong> Repository owner login
+      </td>
+    </tr>
+    <tr>
+      <th>
+        <code>repo</code>
+      </th>
+      <th>
+        <code>string</code>
+      </th>
+      <td>
+        <strong>Required.</strong> Repository name
       </td>
     </tr>
   </tbody>
