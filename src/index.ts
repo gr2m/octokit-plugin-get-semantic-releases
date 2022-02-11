@@ -1,11 +1,15 @@
 import { Octokit } from "@octokit/core";
-import { VERSION } from "./version";
 
-type Options = Record<string, unknown>;
+import { VERSION } from "./version";
+import { composeGetSemanticReleases } from "./compose-get-semantic-releases";
 
 /**
  * @param octokit Octokit instance
- * @param options Options passed to Octokit constructor
  */
-export function getSemanticReleases(octokit: Octokit, options: Options) {}
+export function getSemanticReleases(octokit: Octokit) {
+  return {
+    getSemanticReleases: composeGetSemanticReleases.bind(null, octokit),
+  };
+}
+
 getSemanticReleases.VERSION = VERSION;
