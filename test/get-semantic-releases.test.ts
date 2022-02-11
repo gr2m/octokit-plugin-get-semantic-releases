@@ -97,4 +97,53 @@ describe("octokit.getSemanticReleases()", () => {
       },
     ]);
   });
+
+  it("sort by version number", async () => {
+    const mock = fetchMock
+      .sandbox()
+      .get("https://api.github.com/repos/octokit/core.js/releases", [
+        {
+          tag_name: "v2.0.0",
+        },
+        {
+          tag_name: "v1.1.0",
+        },
+        {
+          tag_name: "v1.1.1",
+        },
+        {
+          tag_name: "v1.0.0",
+        },
+      ]);
+
+    const octokit = new TestOctokit({
+      request: {
+        fetch: mock,
+      },
+    });
+
+    const releases = await octokit.getSemanticReleases({
+      owner: "octokit",
+      repo: "core.js",
+    });
+
+    expect(releases).toStrictEqual([
+      {
+        tag_name: "v1.0.0",
+        version: "1.0.0",
+      },
+      {
+        tag_name: "v1.1.0",
+        version: "1.1.0",
+      },
+      {
+        tag_name: "v1.1.1",
+        version: "1.1.1",
+      },
+      {
+        tag_name: "v2.0.0",
+        version: "2.0.0",
+      },
+    ]);
+  });
 });
