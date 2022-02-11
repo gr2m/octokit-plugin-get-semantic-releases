@@ -1,0 +1,8 @@
+{
+  "extends": "@octokit/tsconfig",
+  "include": ["src/**/*"],
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true
+  }
+}
