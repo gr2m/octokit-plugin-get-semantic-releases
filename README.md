@@ -132,7 +132,7 @@ Example: Load all stable versions greater than `v1.2.1` but not inclusive.
 const releases = await octokit.getSemanticReleases({
   owner: "octokit",
   repo: "core.js",
-  range: ">v1.2.1",
+  range: ">1.2.1",
 });
 ```
 
