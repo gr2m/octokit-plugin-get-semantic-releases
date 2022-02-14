@@ -117,22 +117,22 @@ function myPlugin(octokit, options) {
     </tr>
     <tr>
       <th>
-        <code>since</code>
+        <code>range</code>
       </th>
       <th>
         <code>string</code>
       </th>
       <td>
 
-Filter out versions equal or lower than a provided `since` version.
+Filter out versions that don't match the `range` string following [semver conventions](https://semver.npmjs.com/).
 
-Example: Load all versions greater than `v1.2.3`
+Example: Load all stable versions greater than `v1.2.1` but not inclusive.
 
 ```js
 const releases = await octokit.getSemanticReleases({
   owner: "octokit",
   repo: "core.js",
-  since: "1.2.3",
+  range: ">1.2.1",
 });
 ```
 

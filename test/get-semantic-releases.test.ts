@@ -56,7 +56,7 @@ describe("octokit.getSemanticReleases()", () => {
     ]);
   });
 
-  it("since", async () => {
+  it("range", async () => {
     const mock = fetchMock
       .sandbox()
       .get("https://api.github.com/repos/octokit/core.js/releases", [
@@ -65,6 +65,12 @@ describe("octokit.getSemanticReleases()", () => {
         },
         {
           tag_name: "v1.0.1",
+        },
+        {
+          tag_name: "v1.0.3",
+        },
+        {
+          tag_name: "v1.0.3-debug.1",
         },
         {
           tag_name: "v1.1.0",
@@ -80,13 +86,46 @@ describe("octokit.getSemanticReleases()", () => {
       },
     });
 
-    const releases = await octokit.getSemanticReleases({
+    const exclusiveReleases = await octokit.getSemanticReleases({
       owner: "octokit",
       repo: "core.js",
-      since: "1.0.1",
+      range: ">1.0.1",
     });
 
-    expect(releases).toStrictEqual([
+    expect(exclusiveReleases).toStrictEqual([
+      {
+        version: "1.0.3",
+        tag_name: "v1.0.3",
+      },
+      {
+        version: "1.1.0",
+        tag_name: "v1.1.0",
+      },
+      {
+        version: "1.1.1",
+        tag_name: "v1.1.1",
+      },
+    ]);
+
+    const inclusiveReleases = await octokit.getSemanticReleases({
+      owner: "octokit",
+      repo: "core.js",
+      range: ">=1.0.1 || 1.0.3-debug.1",
+    });
+
+    expect(inclusiveReleases).toStrictEqual([
+      {
+        version: "1.0.1",
+        tag_name: "v1.0.1",
+      },
+      {
+        version: "1.0.3-debug.1",
+        tag_name: "v1.0.3-debug.1",
+      },
+      {
+        version: "1.0.3",
+        tag_name: "v1.0.3",
+      },
       {
         version: "1.1.0",
         tag_name: "v1.1.0",
